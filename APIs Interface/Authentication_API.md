@@ -67,7 +67,7 @@ Authenticates a user and returns an Access Token and Refresh Token.
 ### Endpoint
 
 ```
-POST /login
+POST http://aquametrics.runasp.net/api/Auth/login
 ```
 
 ---
@@ -87,13 +87,17 @@ POST /login
 
 ```json
 {
-  "accessToken": "eyJhbGc...",
-  "refreshToken": "4A2D87A4E53D4F5A...",
-  "expiration": "2026-07-22T16:45:00Z",
-  "userId": "ec20c6a9-4554-4060-736d-08dee7622e59",
-  "fullName": "System Administrator",
-  "email": "admin@aqua.com",
-  "roles": ["Admin"]
+  "success": true,
+  "message": "User information retrieved successfully.",
+  "data": {
+    "accessToken": "eyJhbGc...",
+    "refreshToken": "4A2D87A4E53D4F5A...",
+    "expiration": "2026-07-22T16:45:00Z",
+    "userId": "ec20c6a9-4554-4060-736d-08dee7622e59",
+    "fullName": "System Administrator",
+    "email": "admin@aqua.com",
+    "roles": ["Admin"]
+  }
 }
 ```
 
@@ -141,7 +145,7 @@ This implementation follows **Refresh Token Rotation**.
 ## Endpoint
 
 ```
-POST /refresh
+POST http://aquametrics.runasp.net/api/Auth/refresh
 ```
 
 ---
@@ -159,16 +163,22 @@ POST /refresh
 ## Successful Response (200 OK)
 
 ```json
+
+
 {
-  "accessToken": "eyJhbGc...",
-  "refreshToken": "6F8A98D7EAA2F44...",
-  "expiration": "2026-07-22T17:50:00Z",
-  "userId": "ec20c6a9-4554-4060-736d-08dee7622e59",
-  "fullName": "System Administrator",
-  "email": "admin@aqua.com",
-  "roles": ["Admin"]
+  "success": true,
+  "message": "User information retrieved successfully.",
+  "data": {
+    "accessToken": "eyJhbGc...",
+    "refreshToken": "6F8A98D7EAA2F44...",
+    "expiration": "2026-07-22T17:50:00Z",
+    "userId": "ec20c6a9-4554-4060-736d-08dee7622e59",
+    "fullName": "System Administrator",
+    "email": "admin@aqua.com",
+    "roles": ["Admin"]
+  }
 }
-```
+
 
 ---
 
@@ -203,8 +213,10 @@ Logs the user out by revoking the current Refresh Token.
 ## Endpoint
 
 ```
-POST /logout
-```
+
+POST http://aquametrics.runasp.net/api/Auth/logout
+
+````
 
 ---
 
@@ -214,7 +226,7 @@ POST /logout
 {
   "refreshToken": "6F8A98D7EAA2F44..."
 }
-```
+````
 
 ---
 
