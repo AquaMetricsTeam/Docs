@@ -270,3 +270,170 @@ response
   ]
 }
 ````
+
+# Exercises API Documentation
+
+## Base Route
+
+## Authorization
+
+**Required Role:** `Coach`  
+All endpoints require authentication via Bearer token and the user must have the `Coach` role.
+
+---
+
+## Endpoints
+
+### 1. Create Training Plan
+
+**POST** `/api/exercises`
+
+Creates a new training plan with exercises.
+
+#### Request
+
+**Headers:**
+
+- `Authorization`: Bearer token (required)
+
+**Body:** `CreateTrainingPlanRequest`
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `title` | `string` | ✅ Yes | Training plan title |
+| `description` | `string?` | ❌ No | Training plan description |
+
+#### Response
+
+**Status:** `200 OK`
+
+**Body:** `ApiResponse<TrainingPlanResponse>`
+
+```json
+{
+  "success": true,
+  "message": null,
+  "data": {
+    "id": 1,
+    "title": "Strength Training Plan",
+    "description": "Upper body strength focus",
+    "isArchived": false,
+    "createdById": "550e8400-e29b-41d4-a716-446655440000",
+    "createdAt": "2026-08-01T17:15:00Z",
+    "updatedAt": "2026-08-01T17:15:00Z"
+  }
+}
+```
+
+### 2. Get Training Plans (Paged)
+
+#### GET /api/exercises
+
+Retrieves a paginated list of training plans for the authenticated coach.
+
+#### Request
+
+| Field             | Type      | Required | Default | Description                                       |
+| ----------------- | --------- | -------- | ------- | ------------------------------------------------- |
+| `page`            | `int`     | ❌ No    | `1`     | Page number (inherited from PaginationRequest)    |
+| `pageSize`        | `int`     | ❌ No    | `20`    | Items per page (inherited from PaginationRequest) |
+| `search`          | `string?` | ❌ No    | `null`  | Search by title                                   |
+| `includeArchived` | `bool`    | ❌ No    | `false` | Include archived plans                            |
+| `onlyArchived`    | `bool`    | ❌ No    | `false` | Show only archived plans                          |
+
+#### Response
+
+#### Status: 200 OK
+
+```
+{
+  "success": true,
+  "message": null,
+  "data": {
+    "items": [
+      {
+        "id": 1,
+        "title": "Strength Training Plan",
+        "description": "Upper body strength focus",
+        "isArchived": false,
+        "createdById": "550e8400-e29b-41d4-a716-446655440000",
+        "createdAt": "2026-08-01T17:15:00Z",
+        "updatedAt": "2026-08-01T17:15:00Z",
+        "planExercises": []
+      }
+    ],
+    "page": 1,
+    "pageSize": 20,
+    "totalCount": 1,
+    "totalPages": 1,
+    "hasNextPage": false,
+    "hasPreviousPage": false
+  }
+}
+```
+
+3. Get Training Plan by ID
+   GET /api/exercises/{id}
+   Retrieves a specific training plan by its ID.
+
+{
+"success": true,
+"message": null,
+"data": {
+"id": 1,
+"title": "Strength Training Plan",
+"description": "Upper body strength focus",
+"isArchived": false,
+"createdById": "550e8400-e29b-41d4-a716-446655440000",
+"createdAt": "2026-08-01T17:15:00Z",
+"updatedAt": "2026-08-01T17:15:00Z",
+"planExercises": []
+}
+}
+
+4. Update Training Plan
+   PUT /api/exercises/{id}
+   Updates an existing training plan.
+   Body: UpdateTrainingPlanRequest
+
+| Field         | Type      | Required | Description                 |
+| ------------- | --------- | -------- | --------------------------- |
+| `title`       | `string`  | ✅ Yes   | Updated training plan title |
+| `description` | `string?` | ❌ No    | Updated description         |
+
+{
+"success": true,
+"message": null,
+"data": {
+"id": 1,
+"title": "Updated Strength Plan",
+"description": "Updated description",
+"isArchived": false,
+"createdById": "550e8400-e29b-41d4-a716-446655440000",
+"createdAt": "2026-08-01T17:15:00Z",
+"updatedAt": "2026-08-01T17:20:00Z",
+"planExercises": []
+}
+}
+
+5. Archive Training Plan
+   PATCH /api/exercises/{id}/archive
+   Soft-deletes (archives) a training plan.
+
+Response
+Status: 200 OK
+
+{
+"success": true,
+"message": null,
+"data": true
+}
+
+6. Restore Training Plan
+   PATCH /api/exercises/{id}/restore
+   Restores an archived training plan.
+
+{
+"success": true,
+"message": null,
+"data": true
+}
