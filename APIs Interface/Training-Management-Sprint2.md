@@ -1,5 +1,72 @@
 # AquaMetrics Training Module API Documentation
 
+# Coach Assignments API Documentation
+
+## Base Route
+
+api/athletes/{athleteId:Guid}/coach-assignments
+
+## Authorization
+
+**Required Role:** `Admin`  
+All endpoints require authentication via Bearer token and the user must have the `Admin` role.
+
+---
+
+## Endpoints
+
+### 1. Assign Coach to Athlete
+
+**POST** `/api/athletes/{athleteId}/coach-assignments`
+
+Assigns a coach to a specific athlete.
+
+#### Request
+
+**Headers:**
+
+- `Authorization`: Bearer token (required)
+
+**Route Parameters:**
+| Field | Type | Description |
+|-------|------|-------------|
+| `athleteId` | `Guid` | Athlete ID |
+
+**Body:** `AssignCoachRequest`
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `coachId` | `Guid` | ✅ Yes | Coach ID to assign |
+
+#### Response
+
+**Status:** `200 OK`
+
+**Body:** `ApiResponse<bool>`
+
+````json
+{
+  "success": true,
+  "message": null,
+  "data": true
+}
+
+2. Remove Coach Assignment
+DELETE /api/athletes/{athleteId}/coach-assignments/{assignmentId}
+Removes a specific coach assignment from an athlete.
+Request
+Headers:
+Authorization: Bearer token (required)
+
+| Field          | Type   | Description             |
+| -------------- | ------ | ----------------------- |
+| `athleteId`    | `Guid` | Athlete ID              |
+| `assignmentId` | `int`  | Assignment ID to remove |
+
+
+
+
+
+
 ## 1. POST /api/training-plans
 
 ### Description
@@ -36,7 +103,7 @@ is created.
     }
   ]
 }
-```
+````
 
 ### Request (Create + Assign)
 
