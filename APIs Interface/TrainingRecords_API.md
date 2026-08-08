@@ -31,92 +31,140 @@ All endpoints require authentication and the user must have the `Coach` role.
 
 # Endpoints
 
-## 1. Create Training Record
+# 1. Create Training Record
 
-### Request
+Creates a Training Record for an athlete in a specific Training Session.
+
+## Endpoint
 
 ```http
 POST /api/training-record
 ```
 
-### Description
-
-Creates a training record for an athlete in a specific training session, including the actual performance of the planned exercises.
-
-### Request Body
+## Request Body
 
 ```json
 {
-  "athleteId": "2d166dff-5101-4278-f6bc-08deefecdca4",
-  "trainingSessionId": 2,
-  "performanceRating": 9,
-  "fatigueLevel": 5,
+  "athleteId": "GUID",
+  "trainingSessionId": 1,
+  "performanceRating": 4,
+  "fatigueLevel": 3,
   "sessionCompleted": true,
   "injuryOccurred": false,
-  "overallComment": "Excellent session.",
+  "overallComment": "Good overall performance.",
+  "exercisePerformances": [],
+  "swimmingPerformances": []
+}
+```
+
+### Common Fields
+
+| Field                  | Type                               | Required | Description                                 |
+| ---------------------- | ---------------------------------- | -------: | ------------------------------------------- |
+| `athleteId`            | `Guid`                             |      Yes | Athlete whose performance is being recorded |
+| `trainingSessionId`    | `int`                              |      Yes | Training Session associated with the record |
+| `performanceRating`    | `int`                              |      Yes | Overall performance rating                  |
+| `fatigueLevel`         | `int`                              |      Yes | Athlete's fatigue level                     |
+| `sessionCompleted`     | `bool`                             |      Yes | Whether the athlete completed the session   |
+| `injuryOccurred`       | `bool`                             |      Yes | Whether an injury occurred                  |
+| `overallComment`       | `string?`                          |       No | General coach comment                       |
+| `exercisePerformances` | `List<ExercisePerformanceRequest>` |  Fitness | Fitness performance data                    |
+| `swimmingPerformances` | `List<SwimmingDrillRequest>`       | Swimming | Swimming performance data                   |
+
+The frontend sends the appropriate performance list according to the training type.
+
+## Fitness Example
+
+```json
+{
+  "athleteId": "GUID",
+  "trainingSessionId": 10,
+  "performanceRating": 4,
+  "fatigueLevel": 3,
+  "sessionCompleted": true,
+  "injuryOccurred": false,
+  "overallComment": "Strong fitness session.",
   "exercisePerformances": [
     {
-      "planExerciseId": 26,
+      "planExerciseId": 5,
       "completedSets": 4,
-      "completedReps": 8,
+      "completedReps": 10,
       "completedDuration": null,
-      "weightUsed": 40.8,
+      "weightUsed": 60,
       "rpe": 7,
       "status": 1,
-      "coachComment": "Good technique."
+      "coachComment": "Good form."
+    }
+  ],
+  "swimmingPerformances": []
+}
+```
+
+## Swimming Example
+
+```json
+{
+  "athleteId": "GUID",
+  "trainingSessionId": 15,
+  "performanceRating": 5,
+  "fatigueLevel": 2,
+  "sessionCompleted": true,
+  "injuryOccurred": false,
+  "overallComment": "Very good swimming session.",
+  "exercisePerformances": [],
+  "swimmingPerformances": [
+    {
+      "stroke": 1,
+      "distanceMeters": 100,
+      "repetitions": 4,
+      "restIntervalSeconds": 30,
+      "bestRepTime": "00:01:10",
+      "averageRepTime": "00:01:13",
+      "worstRepTime": "00:01:16",
+      "technique": 4,
+      "start": 5,
+      "turns": 4,
+      "finish": 4,
+      "paceConsistency": 4,
+      "rpe": 7,
+      "status": 1,
+      "coachComment": "Good pacing and turns."
     }
   ]
 }
 ```
 
-### Request Fields
+### Performance Status
 
-| Field | Type | Required | Description |
-|---|---|---:|---|
-| `athleteId` | `Guid` | Yes | Athlete who performed the session |
-| `trainingSessionId` | `int` | Yes | Training session being recorded |
-| `performanceRating` | `int` | Yes | Overall performance rating |
-| `fatigueLevel` | `int` | Yes | Athlete's fatigue level |
-| `sessionCompleted` | `bool` | Yes | Whether the session was completed |
-| `injuryOccurred` | `bool` | Yes | Whether an injury occurred |
-| `overallComment` | `string?` | No | Overall coach comment |
-| `exercisePerformances` | `array` | Yes | Actual performance for the planned exercises |
-
-### Exercise Performance Fields
-
-| Field | Type | Required | Description |
-|---|---|---:|---|
-| `planExerciseId` | `int` | Yes | Planned exercise being recorded |
-| `completedSets` | `int` | Yes | Number of sets actually completed |
-| `completedReps` | `int` | Yes | Number of reps actually completed |
-| `completedDuration` | `int?` | No | Actual duration, when applicable |
-| `weightUsed` | `decimal?` | No | Weight used during the exercise |
-| `rpe` | `int?` | No | Rate of Perceived Exertion |
-| `status` | `PerformanceStatus` | Yes | Completion status |
-| `coachComment` | `string?` | No | Coach's comment for the exercise |
-
-### Response
-
-```json
+```csharp
+public enum PerformanceStatus
 {
-  "success": true,
-  "message": "Training record created successfully.",
-  "data": {
-    "id": 1,
-    "athleteId": "2d166dff-5101-4278-f6bc-08deefecdca4",
-    "athleteName": "Ahmed Ali",
-    "trainingSessionId": 2,
-    "sessionTitle": "Training Session Test One",
-    "sessionDate": "2026-08-15",
-    "performanceRating": 9,
-    "fatigueLevel": 5,
-    "sessionCompleted": true,
-    "injuryOccurred": false,
-    "overallComment": "Excellent session.",
-    "exercisePerformances": []
-  }
+    Completed = 1,
+    PartiallyCompleted = 2,
+    Skipped = 3,
+    Modified = 4
 }
 ```
+
+| Value | Status              |
+| ----: | ------------------- |
+|   `1` | Completed           |
+|   `2` | Partially Completed |
+|   `3` | Skipped             |
+|   `4` | Modified            |
+
+### Validation Rules
+
+Before creating a Training Record, the API validates:
+
+1. The Training Session exists and belongs to the current coach/domain.
+2. The athlete is assigned to the Training Plan associated with the session.
+3. Attendance exists for the athlete and session.
+4. Attendance must be `Present` or `Late`.
+5. The athlete cannot have another Training Record for the same session.
+6. If `exercisePerformances` contains values, the exercises are validated against the Training Plan.
+
+---
 
 ---
 
@@ -184,21 +232,21 @@ Returns paginated training records with optional filtering, searching, and sorti
 
 ### Query Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
-| `PageIndex` | `int` | Page number |
-| `PageSize` | `int` | Number of records per page |
-| `AthleteId` | `Guid?` | Filter by athlete |
-| `TrainingSessionId` | `int?` | Filter by training session |
-| `InjuryOccurred` | `bool?` | Filter records by injury occurrence |
-| `SessionCompleted` | `bool?` | Filter by completion status |
-| `MinPerformanceRating` | `int?` | Minimum performance rating |
-| `MaxPerformanceRating` | `int?` | Maximum performance rating |
-| `FromDate` | `DateOnly?` | Start session date |
-| `ToDate` | `DateOnly?` | End session date |
-| `Search` | `string?` | Search/filter text |
-| `SortBy` | `TrainingRecordSortBy` | Field used for sorting |
-| `Descending` | `bool` | Sort descending when `true` |
+| Parameter              | Type                   | Description                         |
+| ---------------------- | ---------------------- | ----------------------------------- |
+| `PageIndex`            | `int`                  | Page number                         |
+| `PageSize`             | `int`                  | Number of records per page          |
+| `AthleteId`            | `Guid?`                | Filter by athlete                   |
+| `TrainingSessionId`    | `int?`                 | Filter by training session          |
+| `InjuryOccurred`       | `bool?`                | Filter records by injury occurrence |
+| `SessionCompleted`     | `bool?`                | Filter by completion status         |
+| `MinPerformanceRating` | `int?`                 | Minimum performance rating          |
+| `MaxPerformanceRating` | `int?`                 | Maximum performance rating          |
+| `FromDate`             | `DateOnly?`            | Start session date                  |
+| `ToDate`               | `DateOnly?`            | End session date                    |
+| `Search`               | `string?`              | Search/filter text                  |
+| `SortBy`               | `TrainingRecordSortBy` | Field used for sorting              |
+| `Descending`           | `bool`                 | Sort descending when `true`         |
 
 ### Example
 
@@ -370,12 +418,12 @@ This endpoint is useful for the coach's session dashboard to determine which ath
 
 ### Response Fields
 
-| Field | Type | Description |
-|---|---|---|
-| `athleteId` | `Guid` | Athlete identifier |
-| `athleteName` | `string` | Athlete name |
-| `hasTrainingRecord` | `bool` | Whether a record has been created |
-| `trainingRecordId` | `int?` | Existing record ID, or `null` |
+| Field               | Type     | Description                       |
+| ------------------- | -------- | --------------------------------- |
+| `athleteId`         | `Guid`   | Athlete identifier                |
+| `athleteName`       | `string` | Athlete name                      |
+| `hasTrainingRecord` | `bool`   | Whether a record has been created |
+| `trainingRecordId`  | `int?`   | Existing record ID, or `null`     |
 
 ---
 
@@ -445,12 +493,12 @@ public enum PerformanceStatus
 }
 ```
 
-| Value | Name | Description |
-|---:|---|---|
-| `1` | `Completed` | Exercise was completed as planned |
-| `2` | `PartiallyCompleted` | Exercise was only partially completed |
-| `3` | `Skipped` | Exercise was not performed |
-| `4` | `Modified` | Exercise was performed with modifications |
+| Value | Name                 | Description                               |
+| ----: | -------------------- | ----------------------------------------- |
+|   `1` | `Completed`          | Exercise was completed as planned         |
+|   `2` | `PartiallyCompleted` | Exercise was only partially completed     |
+|   `3` | `Skipped`            | Exercise was not performed                |
+|   `4` | `Modified`           | Exercise was performed with modifications |
 
 ---
 
