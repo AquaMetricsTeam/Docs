@@ -31,6 +31,30 @@ All endpoints require authentication and the user must have the `Coach` role.
 
 # Endpoints
 
+# Lookup Training Record
+
+## Endpoint
+
+```http
+GET /api/training-record/Lookup
+```
+
+```response
+
+```
+
+```json
+{
+  "id": 1,
+  "athleteId": "2d166dff-5101-4278-f6bc-08deefecdca4",
+  "athleteName": "Ahmed Ali",
+  "trainingSessionId": 2,
+  "sessionDate": "2026-08-15",
+  "sessionTitle": "Training Session Test One",
+  "performanceRating": 9
+}
+```
+
 # 1. Create Training Record
 
 Creates a Training Record for an athlete in a specific Training Session.
