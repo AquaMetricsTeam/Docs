@@ -242,7 +242,7 @@ Returns `TrainingRecordDetailsResponse`.
 
 ---
 
-# 3. Get Paged Training Records
+# 3. Get Paged Training Records for fitness coach
 
 ### Request
 
