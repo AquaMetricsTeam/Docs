@@ -396,6 +396,43 @@ Creates a scheduled training session from a training template.
 
 Returns paginated training sessions.
 
+```json
+{
+  "success": true,
+  "message": "Request completed successfully.",
+  "data": {
+    "items": [
+      {
+        "id": 2,
+        "title": "Training Session Test One",
+        "description": null,
+        "sessionDate": "2026-08-15",
+        "startTime": "08:00:00",
+        "endTime": "09:30:00",
+        "location": null,
+        "notes": null,
+        "trainingPlanId": 8,
+        "trainingPlanTitle": "Training Plan Test One",
+        "groupNames": [],
+        "athletes": [],
+        "totalAthletesCount": 4,
+        "isArchived": false,
+        "coachId": "c89e61a3-8de6-4ec2-0cbf-08deed0ff755",
+        "domainId": 2
+      }
+    ],
+    "pageNumber": 1,
+    "pageSize": 10,
+    "totalCount": 1,
+    "totalPages": 0,
+    "hasPrevious": false,
+    "hasNext": false
+  },
+  "statusCode": null,
+  "errors": null
+}
+```
+
 ---
 
 ## 3. GET /api/training-sessions/{id}
