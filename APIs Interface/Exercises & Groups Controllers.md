@@ -393,7 +393,23 @@ Retrieves a paginated list of training plans for the authenticated coach.
 4. Update Training Plan
    PUT /api/exercises/{id}
    Updates an existing training plan.
-   Body: UpdateTrainingPlanRequest
+   Body: UpdateTrainingPlanRequest\
+
+{
+"Title" : "Training Plan Test One After Update",
+"PlanExercises" : [
+{
+"planExerciseId": 26,
+"exerciseId": 11,
+"sets": 4,
+"reps": 80,
+"duration": 80,
+"intensity": null,
+"orderIndex": 1,
+"notes": null
+}
+]
+}
 
 | Field         | Type      | Required | Description                 |
 | ------------- | --------- | -------- | --------------------------- |
