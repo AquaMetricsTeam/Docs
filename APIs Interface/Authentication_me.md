@@ -50,6 +50,7 @@ No request body.
   "message": "User information retrieved successfully.",
   "data": {
     "userId": "ec20c6a9-4554-4060-736d-08dee7622e59",
+    "athleteId": "",
     "fullName": "System Administrator",
     "email": "admin@aqua.com",
     "roles": ["Admin"]
