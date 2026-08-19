@@ -103,3 +103,15 @@ AccountCreated = 1,
     CoachRemoved // Done
 
 }
+
+# Real-Time Notifications (SignalR)
+
+The backend uses **ASP.NET Core SignalR** to deliver real-time notifications to the currently authenticated user.
+
+## SignalR Hub
+
+The notification hub is available at:
+
+```text
+/hubs/notifications
+```

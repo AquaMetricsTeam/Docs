@@ -67,6 +67,8 @@ POST /api/training-record
 
 ## Request Body
 
+### If no Injury Occured
+
 ```json
 {
   "athleteId": "GUID",
@@ -75,11 +77,83 @@ POST /api/training-record
   "fatigueLevel": 3,
   "sessionCompleted": true,
   "injuryOccurred": false,
+  "injuryType": null,
+  "injuryBodyPart": null,
+  "injuryComment": null,
   "overallComment": "Good overall performance.",
   "exercisePerformances": [],
   "swimmingPerformances": []
 }
 ```
+
+### If There is Injury Occured
+
+```json
+{
+  "athleteId": "GUID",
+  "trainingSessionId": 1,
+  "performanceRating": 4,
+  "fatigueLevel": 3,
+  "sessionCompleted": true,
+  "injuryOccurred": true,
+  "injuryType": 1,
+  "injuryBodyPart": 12,
+  "injuryComment": "Pain in the hamstring during sprint exercise.",
+  "overallComment": "Good overall performance.",
+  "exercisePerformances": [],
+  "swimmingPerformances": []
+}
+```
+
+| Field            | Value | Meaning    |
+| ---------------- | ----: | ---------- |
+| `InjuryBodyPart` |   `1` | Shoulder   |
+| `InjuryBodyPart` |   `2` | Elbow      |
+| `InjuryBodyPart` |   `3` | Wrist      |
+| `InjuryBodyPart` |   `4` | UpperBack  |
+| `InjuryBodyPart` |   `5` | LowerBack  |
+| `injuryBodyPart` |   `6` | Neck       |
+| `injuryBodyPart` |   `7` | Chest      |
+| `injuryBodyPart` |   `8` | Abdomen    |
+| `injuryBodyPart` |   `9` | Hip        |
+| `InjuryBodyPart` |  `10` | Groin      |
+| `injuryBodyPart` |  `11` | Quadriceps |
+| `injuryBodyPart` |  `12` | Hamstring  |
+| `injuryBodyPart` |  `13` | Calf       |
+| `injuryBodyPart` |  `14` | Knee       |
+| `injuryBodyPart` |  `15` | Ankle      |
+| `injuryBodyPart` |  `16` | Foot       |
+| `injuryBodyPart` |  `99` | Other      |
+
+| Field        | Value | Meaning        |
+| ------------ | ----: | -------------- |
+| `injuryType` |   `1` | MuscleStrain   |
+| `injuryType` |   `2` | MuscleTear     |
+| `injuryType` |   `3` | TendonInjury   |
+| `injuryType` |   `4` | LigamentInjury |
+| `InjuryType` |   `5` | JointInjury    |
+| `InjuryType` |   `6` | Sprain         |
+| `InjuryType` |   `7` | OveruseInjury  |
+| `InjuryType` |   `8` | Cramp          |
+| `InjuryType` |   `9` | Contusion      |
+| `InjuryType` |  `10` | Dislocation    |
+| `InjuryType` |  `11` | Fracture       |
+| `InjuryType` |  `99` | Other          |
+
+| `InjuryType`     | بالعربي                          | المقصود                                                     |
+| ---------------- | -------------------------------- | ----------------------------------------------------------- |
+| `MuscleStrain`   | **شد عضلي**                      | العضلة اتشدت أو حصل لها إجهاد/تمدد زائد                     |
+| `MuscleTear`     | **تمزق عضلي**                    | حصل قطع جزئي في ألياف العضلة                                |
+| `TendonInjury`   | **إصابة في الوتر**               | إصابة في الوتر اللي بيربط العضلة بالعظمة                    |
+| `LigamentInjury` | **إصابة في الأربطة**             | إصابة في الرباط اللي بيربط العظام ببعض                      |
+| `JointInjury`    | **إصابة في المفصل**              | إصابة مرتبطة بالمفصل نفسه                                   |
+| `Sprain`         | **التواء / التواء أربطة**        | غالبًا بسبب حركة مفاجئة بتضغط على الأربطة، زي التواء الكاحل |
+| `OveruseInjury`  | **إصابة نتيجة الاستخدام المفرط** | إصابة تدريجية بسبب تكرار الحركة أو التدريب الزائد           |
+| `Cramp`          | **تقلص / تشنج عضلي**             | انقباض مفاجئ ومؤلم في العضلة                                |
+| `Contusion`      | **كدمة**                         | ضربة مباشرة سببت نزيفًا/تلفًا في الأنسجة تحت الجلد          |
+| `Dislocation`    | **خلع**                          | العظمة خرجت من مكانها الطبيعي في المفصل                     |
+| `Fracture`       | **كسر**                          | كسر أو شرخ في العظمة                                        |
+| `Other`          | **أخرى**                         | إصابة مش موجودة ضمن الاختيارات                              |
 
 ### Common Fields
 
