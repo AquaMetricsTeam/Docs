@@ -327,3 +327,69 @@ POST /refresh
  ▼
 Client
 ```
+
+## Forgot Password
+
+api/auth/forgot-password
+
+### Request Body
+
+```json
+{
+  "email": "coach@aquametrics.com"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "If the email exists, an OTP has been sent."
+}
+```
+
+## Verify OTP
+
+api/auth/verify-otp
+
+### Request Body
+
+```json
+{
+  "email": "coach@aquametrics.com",
+  "otp": "482913"
+}
+```
+
+### Response
+
+```json
+{
+  "success": true,
+  "data": "Z8fK......."
+}
+```
+
+## Reset Password
+
+api/auth/reset-password
+
+### Request Body
+
+```json
+{
+  "resetToken": "Z8fK.......",
+  "newPassword": "NewPassword123!",
+  "confirmPassword": "NewPassword123!"
+}
+```
+
+### Resopnse
+
+```json
+{
+  "success": true,
+  "message": "Password has been reset successfully."
+}
+```
