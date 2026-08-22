@@ -579,18 +579,33 @@ Authorization: Bearer eyJhbGciOi...
 
 ```json
 {
-  "data": [
-    {
-      "id": 25,
-      "title": "Advanced Endurance Plan",
-      "description": "Advanced swimming endurance program",
-      "estimatedDurationMinutes": 90,
-      "planSource": "Coach",
-      "approvalStatus": "Approved",
-      "domainId": 1,
-      "domainName": "Swimming"
+  "data": {
+    "trainingPlans": [
+      {
+        "id": 1,
+        "title": "Sprint Preparation",
+        "objectives": "Improve sprint performance",
+        "description": "...",
+        "estimatedDurationMinutes": 90,
+        "source": 0,
+        "approvalStatus": 1,
+        "domainId": 1,
+        "domainName": "Swimming",
+        "createdById": "...",
+        "createdByName": "Coach Name",
+        "createdAt": "2026-08-20T10:00:00",
+        "updatedAt": "2026-08-20T10:00:00"
+      }
+    ],
+    "nutritionPlan": {
+      "id": 5,
+      "title": "Athlete Nutrition Plan",
+      "dailyCalories": 2500,
+      "proteinGrams": 150,
+      "carbGrams": 300,
+      "fatGrams": 70
     }
-  ]
+  }
 }
 ```
 

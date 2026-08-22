@@ -37,6 +37,26 @@ Retrieves the complete admin dashboard data including KPIs, performance trends, 
     "totalAthletes": 150,
     "totalSessions": 320,
     "totalInjuries": 12,
+    "injuredAthletes": [
+      {
+        "athleteId": "7f8a1c2d-3e4b-4a5c-9d6e-123456789abc",
+        "fullName": "Ahmed Mohamed",
+        "profilePictureUrl": "https://example.com/profile.jpg",
+        "injuryType": 1,
+        "injuryBodyPart": 2,
+        "injuryComment": "Shoulder pain during freestyle",
+        "injuryDate": "2026-08-12T10:30:00"
+      },
+      {
+        "athleteId": "8a9b2c3d-4e5f-4a6b-9c7d-234567890abc",
+        "fullName": "Omar Ali",
+        "profilePictureUrl": null,
+        "injuryType": 2,
+        "injuryBodyPart": 1,
+        "injuryComment": "Knee pain after training",
+        "injuryDate": "2026-08-11T16:20:00"
+      }
+    ],
     "performanceTrend": [
       {
         "date": "2026-07-01",

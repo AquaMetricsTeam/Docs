@@ -270,6 +270,8 @@ Restores an archived template.
 
 ---
 
+## 7. GET /api/training-plans/look-up
+
 # Training Plan Assignments
 
 ## 1. POST /api/training-plan-assignments
